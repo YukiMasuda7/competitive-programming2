@@ -1,9 +1,9 @@
-# セグメント木(RMQ)：　ある区間のに含まれる要素の最大値を木を使って高速に求める
+# RSQ# セグメント木(RMQ)：　ある区間のに含まれる要素の最大値を木を使って高速に求める
 # RMQ
 
 
 def segfunc(x, y):
-    return max(x, y)
+    return x + y
 
 
 class SegTree:
@@ -49,7 +49,7 @@ class SegTree:
 
 N, Q = map(int, input().split())
 A = [0] * N
-ST = SegTree(A, -(10**10), segfunc)
+ST = SegTree(A, 0, segfunc)
 for i in range(Q):
     q = input().split()
     if q[0] == "1":
