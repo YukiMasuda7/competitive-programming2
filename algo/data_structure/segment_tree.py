@@ -58,6 +58,19 @@ class SegTree:
         return result
 
 
+# 鉄則A58
+
+N, Q = map(int, input().split())
+A = [0] * N
+ST = SegTree(A, -(10**10), segfunc)
+for i in range(Q):
+    q = input().split()
+    if q[0] == "1":
+        ST.update(int(q[1]) - 1, int(q[2]))
+    else:
+        print(ST.query(int(q[1]) - 1, int(q[2]) - 2))
+
+
 # コード(解説あり)
 # ここは変える
 def segfunc(x, y):
@@ -95,7 +108,7 @@ class SegTree:
                 self.Tree[i // 2] = self.segfunc(self.Tree[i - 1], self.Tree[i])
             i //= 2
 
-    # 区間[l, r)に対する問い合わせ
+    # 区間[l, r]に対する問い合わせ
     def query(self, l, r):
         result = self.init
         # 葉ノードに移動
