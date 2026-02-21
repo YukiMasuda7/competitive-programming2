@@ -84,6 +84,7 @@ class SegTree:
         self.Height = len(x_list).bit_length() + 1
         self.Tree = [init] * (2**self.Height)
         self.num = 2 ** (self.Height - 1)  # 葉の開始インデックス
+        # 葉ノードをA[i]で埋める
         for i in range(len(x_list)):
             self.Tree[2 ** (self.Height - 1) + i] = x_list[i]
         # 左右の子ノードを元に親のノードの値を出す。(2番目に深い層の最後のノードから根まで逆順に)
