@@ -1,5 +1,9 @@
 # FenwickTree(BIT)
-# 累積和の高速計算(O(logN))・更新(O(logN))ができる
+# 区間和の高速計算(O(logN))・更新(O(logN))ができる
+# 累積和を配列A[r]-A[l]の計算はO(1)だが、
+# 途中でA[i]を書き換える場合O(N)かかってしまう。
+# (A[i+1:]の要素全てを書き換えなければいけないから)
+# BITならこれを計算、更新を共にO(logN)に抑えられる。
 
 # 使い道
 
@@ -44,7 +48,6 @@ class FenwickTree:
 
     def select(self, p):
         return self.sum(p, p)
-
 
 # 初期化【O(N)】：変数名=FenwickTree(要素数)
 Fen = FenwickTree(10)

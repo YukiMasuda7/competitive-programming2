@@ -1,13 +1,13 @@
-# i番目に小さい数がどこにあるかを管理
-N = int(input())
-A = list(map(int, input().split()))
-# i番目に小さい数は何か
-H = [0] * (N)
-for i in range(N):
-    H[i] = A[i]
-H = list(set(H))
+# 最長増加部分列(LIS)の限定的なバージョン
+# d[i][v] を「A[1]からA[i]までの連続部分列のみを考えた時に、
+# 末尾の要素が v であるような条件を満たす部分列の長さの最大値」とします。
+# 求める答えは d[i][v] の最大値です。
 
-# i番目に小さい数はどこにあるか？
-pos = [[] for _ in range(len(H))]
-for i in range(N):
-    pos[H.index(A[i])].append(i)
+from collections import defaultdict
+
+n = int(input())
+a = list(map(int, input().split()))
+d = defaultdict(int)
+for v in a:
+    d[v] = max(d[v], d[v - 1] + 1)
+print(max(d.values()))
