@@ -1,33 +1,33 @@
-# 各点をスタートとするBFSをする
-# グリッドから出たら数えず終わり
-# そのスタートがもう数えたものであるかはboolで管理
-from collections import deque
-
-dir = [(0, 1), (-1, 0), (0, -1), (1, 0)]
+# 領域内の1マスbfsすれば(その際に領域内のマスはvisited=Trueにする)
+# その領域が最外周を含むのかがわかる
 
 H, W = map(int, input().split())
-G = []
-for i in range(H):
-    s = input()
-    s = list(s)
-    G.append(s)
-ans = 0
+S = [input() for _ in range(H)]
+
+dir = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 visited = [[False] * W for _ in range(H)]
 
 
+def bfs(y, x):
+    out = False
+    visited[y][x] = True
+    q = [(y, x)]
+    for i, j in q:
+        if i == 0 or i == H - 1 or j == 0 or j == W - 1:
+            out = True
+        for dy, dx in dir:
+            ii = i + dy
+            jj = j + dx
+            if 0 <= ii < H and 0 <= jj < W and S[ii][jj] == "." and not visited[ii][jj]:
+                q.append((ii, jj))
+                visited[ii][jj] = True
+    return out
+
+
+ans = 0
 for i in range(H):
     for j in range(W):
-        flag=True
-        if G[i][j]=="." and visited[i][j]==False:
-            q=deque()
-            q.append((i,j))
-            while q and flag:
-                now =q.popleft()
-                visited[now[0]][now[1]]=True
-
-                for d in dir:
-                    if not(0<=i+d[0]<H and 0<=j+d[1]<W):
-                        flag=False
-                        break
-
-
+        if S[i][j] == "." and not visited[i][j]:
+            if not bfs(i, j):
+                ans += 1
+print(ans)
