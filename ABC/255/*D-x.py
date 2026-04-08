@@ -11,14 +11,17 @@ import bisect
 
 N, Q = map(int, input().split())
 A = list(map(int, input().split()))
-S = [0] * N
-S[0] = A[0]
-for i in range(1, N):
-    S[i] = S[i - 1] + A[i]
-for i in range(Q):
+A.sort()
+
+S = [0] * (N + 1)
+for i in range(N):
+    S[i + 1] = S[i] + A[i]
+
+for _ in range(Q):
     X = int(input())
     pos = bisect.bisect_left(A, X)
-    if pos == N - 1:
-        ans = N * X + S[N - 1]
-    elif pos == 0:
-        ans = N * X + S[N - 1]
+
+    left = X * pos - S[pos]
+    right = (S[N] - S[pos]) - X * (N - pos)
+    ans = left + right
+    print(ans)
